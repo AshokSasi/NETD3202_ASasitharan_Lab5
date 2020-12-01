@@ -1,0 +1,47 @@
+﻿@model IEnumerable<NETD3202_ASasitharan_Lab5.Models.Patient>
+
+@{
+    ViewData["Title"] = "Brampton Hospital-Patients";
+}
+
+<h1>Patients</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                First Name
+            </th>
+            <th>
+               Last Name
+            </th>
+            <th>
+               Phone Number
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.patientfname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.patientlname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.patientphone)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.patientId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.patientId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.patientId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
