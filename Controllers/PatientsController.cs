@@ -55,13 +55,21 @@ namespace NETD3202_ASasitharan_Lab5.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("patientId,patientfname,patientlname,patientphone")] Patient patient)
         {
-            if (ModelState.IsValid)
+            if (patient.Validate(patient.patientfname, patient.patientlname, patient.patientphone) == false)
             {
-                _context.Add(patient);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return View("Fail");
             }
-            return View(patient);
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    _context.Add(patient);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(patient);
+            }
+           
         }
 
         // GET: Patients/Edit/5

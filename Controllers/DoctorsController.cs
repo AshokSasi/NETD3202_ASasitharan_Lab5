@@ -55,13 +55,23 @@ namespace NETD3202_ASasitharan_Lab5.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("doctorId,doctorfname,doctorlname,doctorphone")] Doctor doctor)
         {
-            if (ModelState.IsValid)
+            if (doctor.Validate(doctor.doctorfname,doctor.doctorlname,doctor.doctorphone) == false)
             {
-                _context.Add(doctor);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return View("Fail");
             }
-            return View(doctor);
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    _context.Add(doctor);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+
+
+                return View(doctor);
+            }
+            
         }
 
         // GET: Doctors/Edit/5
@@ -91,28 +101,35 @@ namespace NETD3202_ASasitharan_Lab5.Controllers
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
+            if (doctor.Validate(doctor.doctorfname, doctor.doctorlname, doctor.doctorphone) == false)
             {
-                try
-                {
-                    _context.Update(doctor);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!DoctorExists(doctor.doctorId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                return View("Fail");
             }
-            return View(doctor);
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        _context.Update(doctor);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!DoctorExists(doctor.doctorId))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(doctor);
+            }
+            
         }
 
         // GET: Doctors/Delete/5

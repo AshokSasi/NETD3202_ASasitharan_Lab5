@@ -12,14 +12,35 @@ namespace NETD3202_ASasitharan_Lab5.Models
         public string appointmentType { get; set; }
         public DateTime appointmentDate { get; set; }
 
-    
+        public string doctorfname { get; set; }
+
+        public string doctorlname { get; set; }
+        public string fullname { get { return this.doctorfname + " " + this.doctorlname; } }
         public int doctorId { get; set; }
+    
 
         public virtual Doctor Doctor { get; set; }
        
         
         public int patientId { get; set; }
         public virtual Patient Patient { get; set; }
+
+
+        public bool Validate(string appointmentType)
+        {
+         
+            if (string.IsNullOrEmpty(appointmentType))
+            {
+
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
+
+        }
 
     }
 }

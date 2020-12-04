@@ -19,7 +19,7 @@
                 Date
             </th>
             <th>
-                Doctor ID
+                Doctor Name
             </th>
             <th>
                Patient ID
@@ -37,7 +37,7 @@
                 @Html.DisplayFor(modelItem => item.appointmentDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Doctor.doctorId)
+                @Html.DisplayFor(modelItem => item.Doctor.fullname)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Patient.patientId)

@@ -35,6 +35,12 @@ namespace NETD3202_ASasitharan_Lab5.Migrations
                     b.Property<int>("doctorId")
                         .HasColumnType("int");
 
+                    b.Property<string>("doctorfname")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("doctorlname")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("patientId")
                         .HasColumnType("int");
 

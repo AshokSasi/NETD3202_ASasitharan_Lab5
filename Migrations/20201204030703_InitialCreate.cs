@@ -45,6 +45,8 @@ namespace NETD3202_ASasitharan_Lab5.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     appointmentType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     appointmentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    doctorfname = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    doctorlname = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     doctorId = table.Column<int>(type: "int", nullable: false),
                     patientId = table.Column<int>(type: "int", nullable: false)
                 },

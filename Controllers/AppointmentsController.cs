@@ -22,6 +22,8 @@ namespace NETD3202_ASasitharan_Lab5.Controllers
         public async Task<IActionResult> Index()
         {
             var hospitalContext = _context.appointment.Include(a => a.Doctor).Include(a => a.Patient);
+           
+
             return View(await hospitalContext.ToListAsync());
         }
 
@@ -37,6 +39,7 @@ namespace NETD3202_ASasitharan_Lab5.Controllers
                 .Include(a => a.Doctor)
                 .Include(a => a.Patient)
                 .FirstOrDefaultAsync(m => m.appointmentId == id);
+            
             if (appointment == null)
             {
                 return NotFound();
@@ -48,7 +51,7 @@ namespace NETD3202_ASasitharan_Lab5.Controllers
         // GET: Appointments/Create
         public IActionResult Create()
         {
-            ViewData["doctorId"] = new SelectList(_context.doctors, "doctorId", "doctorId");
+            ViewData["doctorId"] = new SelectList(_context.doctors, "doctorId", "fullname");
             ViewData["patientId"] = new SelectList(_context.patients, "patientId", "patientId");
             return View();
         }
@@ -58,17 +61,26 @@ namespace NETD3202_ASasitharan_Lab5.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("appointmentId,appointmentType,appointmentDate,doctorId,patientId")] Appointment appointment)
+        public async Task<IActionResult> Create([Bind("appointmentId,appointmentType,appointmentDate,doctorfname,doctorId,patientId")] Appointment appointment)
         {
-            if (ModelState.IsValid)
+            if (appointment.Validate(appointment.appointmentType) == false)
             {
-                _context.Add(appointment);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return View("Fail");
             }
-            ViewData["doctorId"] = new SelectList(_context.doctors, "doctorId", "doctorId", appointment.doctorId);
-            ViewData["patientId"] = new SelectList(_context.patients, "patientId", "patientId", appointment.patientId);
-            return View(appointment);
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    _context.Add(appointment);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                
+                ViewData["doctorId"] = new SelectList(_context.doctors, "doctorId", "fullname", appointment.doctorId);
+                ViewData["patientId"] = new SelectList(_context.patients, "patientId", "patientId", appointment.patientId);
+                return View(appointment);
+            }
+            
         }
 
         // GET: Appointments/Edit/5
@@ -84,7 +96,7 @@ namespace NETD3202_ASasitharan_Lab5.Controllers
             {
                 return NotFound();
             }
-            ViewData["doctorId"] = new SelectList(_context.doctors, "doctorId", "doctorId", appointment.doctorId);
+            ViewData["doctorId"] = new SelectList(_context.doctors, "doctorId", "fullname", appointment.doctorId);
             ViewData["patientId"] = new SelectList(_context.patients, "patientId", "patientId", appointment.patientId);
             return View(appointment);
         }
@@ -121,7 +133,7 @@ namespace NETD3202_ASasitharan_Lab5.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["doctorId"] = new SelectList(_context.doctors, "doctorId", "doctorId", appointment.doctorId);
+            ViewData["doctorId"] = new SelectList(_context.doctors, "doctorId", "fullname", appointment.doctorId);
             ViewData["patientId"] = new SelectList(_context.patients, "patientId", "patientId", appointment.patientId);
             return View(appointment);
         }

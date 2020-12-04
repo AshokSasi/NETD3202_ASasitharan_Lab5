@@ -10,7 +10,7 @@ using NETD3202_ASasitharan_Lab5.Models;
 namespace NETD3202_ASasitharan_Lab5.Migrations
 {
     [DbContext(typeof(HospitalContext))]
-    [Migration("20201130233816_InitialCreate")]
+    [Migration("20201204030703_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,6 +36,12 @@ namespace NETD3202_ASasitharan_Lab5.Migrations
 
                     b.Property<int>("doctorId")
                         .HasColumnType("int");
+
+                    b.Property<string>("doctorfname")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("doctorlname")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("patientId")
                         .HasColumnType("int");
