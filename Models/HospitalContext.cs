@@ -1,4 +1,12 @@
-﻿using System;
+﻿/*
+ * Name: Ashok Sasitharan
+ * ID:100745484
+ * Date: December 1 2020
+ * Project: NETD3202 Lab5
+ * File: HospitalContext.cs
+ * Purpose: This file contains the hospital context for all of the models
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

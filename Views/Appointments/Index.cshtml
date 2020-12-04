@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<NETD3202_ASasitharan_Lab5.Models.Appointment>
 
 @{
-    ViewData["Title"] = "Brampton Hospital-Appointments";
+    ViewData["Title"] = "Appointments";
 }
 
 <h1>Appointments</h1>
@@ -9,8 +9,8 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
+<table class="table table-hover">
+    <thead class="thead-dark">
         <tr>
             <th>
                Appointment Type
@@ -19,10 +19,10 @@
                 Date
             </th>
             <th>
-                Doctor Name
+                Doctor
             </th>
             <th>
-               Patient ID
+               Patient
             </th>
             <th></th>
         </tr>
@@ -40,7 +40,7 @@
                 @Html.DisplayFor(modelItem => item.Doctor.fullname)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Patient.patientId)
+                @Html.DisplayFor(modelItem => item.Patient.patientfullname)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.appointmentId">Edit</a> |

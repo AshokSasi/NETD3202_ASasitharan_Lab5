@@ -1,4 +1,12 @@
-﻿using System;
+﻿/*
+ * Name: Ashok Sasitharan
+ * ID:100745484
+ * Date: December 1 2020
+ * Project: NETD3202 Lab5
+ * File: AppointmentsController.cs
+ * Purpose: This file is the appointments controller and checks if the user input is valid before putting it into the database
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -51,8 +59,9 @@ namespace NETD3202_ASasitharan_Lab5.Controllers
         // GET: Appointments/Create
         public IActionResult Create()
         {
+            //set the alias of doctor ID and patient ID to the full name of the doctor or patient so the user can see who the ID belongs too
             ViewData["doctorId"] = new SelectList(_context.doctors, "doctorId", "fullname");
-            ViewData["patientId"] = new SelectList(_context.patients, "patientId", "patientId");
+            ViewData["patientId"] = new SelectList(_context.patients, "patientId", "patientfullname");
             return View();
         }
 
@@ -63,6 +72,7 @@ namespace NETD3202_ASasitharan_Lab5.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("appointmentId,appointmentType,appointmentDate,doctorfname,doctorId,patientId")] Appointment appointment)
         {
+            //put the appointment type into a validate function to check its string length
             if (appointment.Validate(appointment.appointmentType) == false)
             {
                 return View("Fail");
@@ -75,9 +85,9 @@ namespace NETD3202_ASasitharan_Lab5.Controllers
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
-                
+                //set the alias of doctor ID and patient ID to the full name of the doctor or patient so the user can see who the ID belongs too
                 ViewData["doctorId"] = new SelectList(_context.doctors, "doctorId", "fullname", appointment.doctorId);
-                ViewData["patientId"] = new SelectList(_context.patients, "patientId", "patientId", appointment.patientId);
+                ViewData["patientId"] = new SelectList(_context.patients, "patientId", "patientfullname", appointment.patientId);
                 return View(appointment);
             }
             
@@ -96,8 +106,9 @@ namespace NETD3202_ASasitharan_Lab5.Controllers
             {
                 return NotFound();
             }
+            //set the alias of doctor ID and patient ID to the full name of the doctor or patient so the user can see who the ID belongs too
             ViewData["doctorId"] = new SelectList(_context.doctors, "doctorId", "fullname", appointment.doctorId);
-            ViewData["patientId"] = new SelectList(_context.patients, "patientId", "patientId", appointment.patientId);
+            ViewData["patientId"] = new SelectList(_context.patients, "patientId", "patientfullname", appointment.patientId);
             return View(appointment);
         }
 
@@ -112,30 +123,38 @@ namespace NETD3202_ASasitharan_Lab5.Controllers
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
+            if (appointment.Validate(appointment.appointmentType) == false)
             {
-                try
-                {
-                    _context.Update(appointment);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!AppointmentExists(appointment.appointmentId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                return View("Fail");
             }
-            ViewData["doctorId"] = new SelectList(_context.doctors, "doctorId", "fullname", appointment.doctorId);
-            ViewData["patientId"] = new SelectList(_context.patients, "patientId", "patientId", appointment.patientId);
-            return View(appointment);
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        _context.Update(appointment);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!AppointmentExists(appointment.appointmentId))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                    return RedirectToAction(nameof(Index));
+                }
+                //set the alias of doctor ID and patient ID to the full name of the doctor or patient so the user can see who the ID belongs too
+                ViewData["doctorId"] = new SelectList(_context.doctors, "doctorId", "fullname", appointment.doctorId);
+                ViewData["patientId"] = new SelectList(_context.patients, "patientId", "patientfullname", appointment.patientId);
+                return View(appointment);
+            }
+            
         }
 
         // GET: Appointments/Delete/5

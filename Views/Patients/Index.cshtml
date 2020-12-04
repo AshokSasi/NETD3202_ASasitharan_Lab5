@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<NETD3202_ASasitharan_Lab5.Models.Patient>
 
 @{
-    ViewData["Title"] = "Brampton Hospital-Patients";
+    ViewData["Title"] = "Patients";
 }
 
 <h1>Patients</h1>
@@ -9,8 +9,8 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
+<table class="table table-hover">
+    <thead class="thead-dark">
         <tr>
             <th>
                 First Name
@@ -23,7 +23,7 @@
             </th>
             <th></th>
         </tr>
-    </thead>
+    </thead class="thead-dark">
     <tbody>
 @foreach (var item in Model) {
         <tr>

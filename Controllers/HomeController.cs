@@ -1,4 +1,12 @@
-﻿using System;
+﻿/*
+ * Name: Ashok Sasitharan
+ * ID:100745484
+ * Date: December 1 2020
+ * Project: NETD3202 Lab5
+ * File: HomeController.cs
+ * Purpose: This file is the Home controller and allows the user to navigate to any of the pages stored under the Home folder
+ */
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -22,7 +30,14 @@ namespace NETD3202_ASasitharan_Lab5.Controllers
         {
             return View();
         }
-
+        public IActionResult FAQ()
+        {
+            return View();
+        }
+        public IActionResult ContactUs()
+        {
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();

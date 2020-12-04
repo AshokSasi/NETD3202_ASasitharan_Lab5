@@ -1,4 +1,12 @@
-﻿using System;
+﻿/*
+ * Name: Ashok Sasitharan
+ * ID:100745484
+ * Date: December 1 2020
+ * Project: NETD3202 Lab5
+ * File: DoctorsController.cs
+ * Purpose: This file is the doctor controller and checks if the user input is valid before putting it into the database
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -55,6 +63,7 @@ namespace NETD3202_ASasitharan_Lab5.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("doctorId,doctorfname,doctorlname,doctorphone")] Doctor doctor)
         {
+            //put the doctor fields in a validation function to see if the phone number is numeric and if the names a greater than the minimum character length
             if (doctor.Validate(doctor.doctorfname,doctor.doctorlname,doctor.doctorphone) == false)
             {
                 return View("Fail");

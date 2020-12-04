@@ -1,4 +1,12 @@
-﻿using System;
+﻿/*
+ * Name: Ashok Sasitharan
+ * ID:100745484
+ * Date: December 1 2020
+ * Project: NETD3202 Lab5
+ * File: PatientsController.cs
+ * Purpose: This file is the patients controller and checks if the user input is valid before putting it into the database
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -55,6 +63,7 @@ namespace NETD3202_ASasitharan_Lab5.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("patientId,patientfname,patientlname,patientphone")] Patient patient)
         {
+            //check if the user input is valid through a function and put input in database if it is valid else show fail screen
             if (patient.Validate(patient.patientfname, patient.patientlname, patient.patientphone) == false)
             {
                 return View("Fail");
@@ -99,28 +108,35 @@ namespace NETD3202_ASasitharan_Lab5.Controllers
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
+            if (patient.Validate(patient.patientfname, patient.patientlname, patient.patientphone) == false)
             {
-                try
-                {
-                    _context.Update(patient);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PatientExists(patient.patientId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                return View("Fail");
             }
-            return View(patient);
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        _context.Update(patient);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!PatientExists(patient.patientId))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(patient);
+            }
+            
         }
 
         // GET: Patients/Delete/5
