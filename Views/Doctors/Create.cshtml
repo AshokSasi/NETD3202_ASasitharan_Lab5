@@ -1,4 +1,14 @@
-﻿@model NETD3202_ASasitharan_Lab5.Models.Doctor
+﻿<!--
+    /*
+ * Name: Ashok Sasitharan
+ * ID:100745484
+ * Date: December 1 2020
+ * Project: NETD3202 Lab5
+ * File: Create.cshtml
+ * Purpose: This file contains the create page form for doctors to add an doctors
+ */
+    -->
+@model NETD3202_ASasitharan_Lab5.Models.Doctor
 
 @{
     ViewData["Title"] = "Create";
@@ -14,12 +24,12 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="doctorfname" class="control-label">Doctor First Name</label>
-                <input asp-for="doctorfname" class="form-control" required="required"  />
+                <input asp-for="doctorfname" class="form-control" required="required" />
                 <span asp-validation-for="doctorfname" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="doctorlname" class="control-label">Doctor Last Name</label>
-                <input asp-for="doctorlname" class="form-control" required="required"  />
+                <input asp-for="doctorlname" class="form-control" required="required" />
                 <span asp-validation-for="doctorlname" class="text-danger"></span>
             </div>
             <div class="form-group">
